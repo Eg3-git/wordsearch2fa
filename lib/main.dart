@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'wordsearch.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,11 +52,15 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-
         child: Column(
-         
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            ElevatedButton(
+              child: const Text('To WS'),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => WordsearchPage(title: 'Word Search',)));
+              },
+            ),
             const Text(
               'You have pushed the button this many times:',
             ),
@@ -74,3 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
+
