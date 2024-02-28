@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/material/colors.dart';
+import 'genws.dart';
 import 'dart:math';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -30,36 +31,8 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
   final String correct_word = "horses";
 
   void setupgrid(List<String> words) {
-    for (var i=0; i<grid_size*grid_size; i++) {
-      _letters.add("1");
-      _userletters.add(false);
-    }
-    int pos = 0;
-    for (var w in _words) {
-      for (var l=0; l<w.length; l++) {
-        _letters[pos] = w[l];
-        pos++;
-      }
-      while (pos % grid_size != 0) {
-        pos++;
-      }
-    }
-
-    for (var i=0; i<grid_size*grid_size; i++) {
-      if (_letters[i] == "1") {
-        _letters[i] = randLetters(1);
-      }
-    }
-  }
-
-  String randLetters(int n) {
-    const _chars = 'abcdefghijklmnopqrstuvwxyz';
-    Random _rnd = Random();
-
-    String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-        length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-
-    return getRandomString(n);
+    _letters.addAll(generate_wordsearch(words, grid_size));
+    _userletters.addAll(List.filled(_letters.length, false));
   }
 
   void checkisright() {
@@ -128,6 +101,7 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
             crossAxisCount: grid_size,
         children: List.generate(grid_size*grid_size, (index) {
           return Container(
+            constraints: BoxConstraints(maxWidth: min(ui.size.width, ui.size.height), maxHeight: min(ui.size.width, ui.size.height)),
             decoration: new BoxDecoration(
               color: _userletters[index] ? Colors.yellow.shade200 : null,
             ),
@@ -143,18 +117,17 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
   }
 
   void locateWord(var t) {
+    int puzzle_size = min(t.size.width, t.size.height);
+
     double x0 = _dragX.first;
     double x1 = _dragX.last;
     double y0 = _dragY.first;
     double y1 = _dragY.last;
-    int xstart = 0;
-    int xend = 0;
-    int ystart = 0;
-    int yend = 0;
-    xstart = x0 ~/ (t.size.width / grid_size);
-    xend = x1 ~/ (t.size.width / grid_size);
-    ystart = y0 ~/ (t.size.width / grid_size);
-    yend = y1 ~/ (t.size.width / grid_size);
+
+    int xstart = x0 ~/ (puzzle_size / grid_size);
+    int xend = x1 ~/ (puzzle_size / grid_size);
+    int ystart = y0 ~/ (puzzle_size / grid_size);
+    int yend = y1 ~/ (puzzle_size / grid_size);
 
     if (ystart == yend){
       for (var i=xstart; i<=xend; i++ ){
@@ -188,9 +161,11 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
   }
 
   void changeLetterColor(double x, double y, var t) {
-    int myx = x ~/ (t.size.width / grid_size);
-    int myy = y ~/ (t.size.width / grid_size);
-    int pos = myx + (10 * myy);
+    int puzzle_size = min(t.size.width, t.size.height);
+
+    int myx = x ~/ (puzzle_size / grid_size);
+    int myy = y ~/ (puzzle_size / grid_size);
+    int pos = myx + (grid_size * myy);
     setState(() {
       _userletters[pos] = true;
     });
