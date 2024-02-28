@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/material/colors.dart';
 import 'dart:math';
@@ -67,7 +65,7 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
   void checkisright() {
     var p = "";
     bool found_correct = false;
-    bool done = false;
+    //bool done = false;
 
     for (var i=0; i<_saved.length; i++) {
       p = p + _saved[i];
