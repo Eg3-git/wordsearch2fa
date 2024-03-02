@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wordsearch2fa/wordsearch.dart';
 
@@ -15,6 +14,7 @@ class PwordPage extends StatefulWidget {
 class PwordState extends State<PwordPage> with SingleTickerProviderStateMixin {
   bool isVisible = false;
   bool hasFailed = false;
+  String pword = "";
   final TextEditingController field1 = TextEditingController();
   final TextEditingController field2 = TextEditingController();
 
@@ -24,7 +24,10 @@ class PwordState extends State<PwordPage> with SingleTickerProviderStateMixin {
         hasFailed = true;
       });
     } else {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => WordsearchPage(title: "Wordsearch")));
+      setState(() {
+        pword = field1.text;
+      });
+      Navigator.push(context, MaterialPageRoute(builder: (context) => WordsearchPage(title: "Wordsearch", pword: pword,)));
     }
   }
 

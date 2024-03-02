@@ -9,10 +9,10 @@ void main() {
 }
 
 
-List<String> generate_wordsearch(List<String> words, int grid_size){
+List<String> generate_wordsearch(List<String> words, int gridSize){
   final WSSettings ws = WSSettings(
-      width: grid_size,
-      height: grid_size,
+      width: gridSize,
+      height: gridSize,
       orientations: List.from([
         WSOrientation.horizontal,
         WSOrientation.vertical,

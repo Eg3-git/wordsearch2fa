@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wordsearch2fa/set_pword.dart';
-import 'wordsearch.dart';
+//import 'wordsearch.dart';
 
 void main() {
   runApp(const MyApp());
@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               child: const Text('To WS'),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PwordPage(title: 'Word Search',)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PwordPage(title: 'Word Search',)));
               },
             ),
             const Text(

@@ -8,8 +8,9 @@ const int grid_size = 10;
 
 class WordsearchPage extends StatefulWidget {
 
-  WordsearchPage({Key? key, required this.title}) : super(key: key);
+  WordsearchPage({Key? key, required this.title, required this.pword}) : super(key: key);
   final String title;
+  final String pword;
 
   @override
   WordsearchState createState() => WordsearchState();
@@ -28,27 +29,26 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
   final TextStyle _biggerFont = const TextStyle(fontSize: 24);
   final TextStyle _bigFont = const TextStyle(fontSize: 18);
 
-  final String correct_word = "horses";
-
   void setupgrid(List<String> words) {
+    _words.add(widget.pword);
     _letters.addAll(generate_wordsearch(words, grid_size));
     _userletters.addAll(List.filled(_letters.length, false));
   }
 
   void checkisright() {
     var p = "";
-    bool found_correct = false;
+    bool foundCorrect = false;
     //bool done = false;
 
     for (var i=0; i<_saved.length; i++) {
       p = p + _saved[i];
     }
 
-    if (correct_word == p) {
-      found_correct = true;
+    if (widget.pword == p) {
+      foundCorrect = true;
     }
 
-    showMessage(p, found_correct);
+    showMessage(p, foundCorrect);
     _saved.clear();
   }
 
