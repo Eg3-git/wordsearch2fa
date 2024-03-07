@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/material/colors.dart';
-import 'genws.dart';
 import 'dart:math';
-//import 'package:cloud_firestore/cloud_firestore.dart';
 
-const int grid_size = 10;
+import 'genws.dart';
+
+
+const int gridSize = 10;
 
 class WordsearchPage extends StatefulWidget {
 
-  WordsearchPage({Key? key, required this.title, required this.pword}) : super(key: key);
+  const WordsearchPage({super.key, required this.title, required this.pword});
   final String title;
   final String pword;
 
@@ -31,14 +31,13 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
 
   void setupgrid(List<String> words) {
     _words.add(widget.pword);
-    _letters.addAll(generate_wordsearch(words, grid_size));
+    _letters.addAll(generateWordsearch(words, gridSize));
     _userletters.addAll(List.filled(_letters.length, false));
   }
 
   void checkisright() {
     var p = "";
     bool foundCorrect = false;
-    //bool done = false;
 
     for (var i=0; i<_saved.length; i++) {
       p = p + _saved[i];
@@ -57,13 +56,13 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: new Text("Your answer: $input"),
+            title: Text("Your answer: $input"),
               content: isfound
-                  ? new Text(
+                  ? const Text(
                   "Codeword entered correctly")
-                  : new Text("Incorrect"),
+                  : const Text("Incorrect"),
             actions: <Widget>[
-              new TextButton(onPressed: () {Navigator.of(context).pop();}, child: new Text("close")),
+              TextButton(onPressed: () {Navigator.of(context).pop();}, child: const Text("close")),
             ],
 
 
@@ -98,11 +97,11 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
         child: GridView.count(
           primary: false,
             shrinkWrap: true,
-            crossAxisCount: grid_size,
-        children: List.generate(grid_size*grid_size, (index) {
+            crossAxisCount: gridSize,
+        children: List.generate(gridSize*gridSize, (index) {
           return Container(
             constraints: BoxConstraints(maxWidth: min(ui.size.width, ui.size.height), maxHeight: min(ui.size.width, ui.size.height)),
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
               color: _userletters[index] ? Colors.yellow.shade200 : null,
             ),
             alignment: Alignment.center,
@@ -117,17 +116,17 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
   }
 
   void locateWord(var t) {
-    int puzzle_size = min(t.size.width, t.size.height);
+    int puzzleSize = min(t.size.width, t.size.height);
 
     double x0 = _dragX.first;
     double x1 = _dragX.last;
     double y0 = _dragY.first;
     double y1 = _dragY.last;
 
-    int xstart = x0 ~/ (puzzle_size / grid_size);
-    int xend = x1 ~/ (puzzle_size / grid_size);
-    int ystart = y0 ~/ (puzzle_size / grid_size);
-    int yend = y1 ~/ (puzzle_size / grid_size);
+    int xstart = x0 ~/ (puzzleSize / gridSize);
+    int xend = x1 ~/ (puzzleSize / gridSize);
+    int ystart = y0 ~/ (puzzleSize / gridSize);
+    int yend = y1 ~/ (puzzleSize / gridSize);
 
     if (ystart == yend){
       for (var i=xstart; i<=xend; i++ ){
@@ -161,11 +160,11 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
   }
 
   void changeLetterColor(double x, double y, var t) {
-    int puzzle_size = min(t.size.width, t.size.height);
+    int puzzleSize = min(t.size.width, t.size.height);
 
-    int myx = x ~/ (puzzle_size / grid_size);
-    int myy = y ~/ (puzzle_size / grid_size);
-    int pos = myx + (grid_size * myy);
+    int myx = x ~/ (puzzleSize / gridSize);
+    int myy = y ~/ (puzzleSize / gridSize);
+    int pos = myx + (gridSize * myy);
     setState(() {
       _userletters[pos] = true;
     });
@@ -186,21 +185,19 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
   }
 
   Widget interface(var ui, List<String> words) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          grid(ui, words),
-          SizedBox(height: ui.size.height / 44,),
-          Divider(
-            indent: ui.size.width / 12,
-            endIndent: ui.size.width / 12,
-            thickness: 3.0,
-            color: Colors.black,
-          ),
-          SizedBox(height: ui.size.height / 44,),
-          box(),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        grid(ui, words),
+        SizedBox(height: ui.size.height / 44,),
+        Divider(
+          indent: ui.size.width / 12,
+          endIndent: ui.size.width / 12,
+          thickness: 3.0,
+          color: Colors.black,
+        ),
+        SizedBox(height: ui.size.height / 44,),
+        box(),
+      ],
     );
   }
 
@@ -220,14 +217,14 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
                 tiles: tiles).toList();
             return Scaffold(
               appBar: AppBar(
-                title: Text('Locate your password'),
+                title: const Text('Locate your password'),
               ),
               body: ListView(children: divided,),
               floatingActionButton: FloatingActionButton.extended(
                   onPressed: clear,
                   tooltip: 'Clear',
-                  icon: Icon(Icons.autorenew),
-                  label: Text("Restart"),
+                  icon: const Icon(Icons.autorenew),
+                  label: const Text("Restart"),
                 elevation: 30.0,
                 highlightElevation: 0.0,
               ),
@@ -244,7 +241,7 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
       appBar: AppBar(
         title: Text(widget.title),
         actions: <Widget>[
-          IconButton(onPressed: pushSaved, icon: Icon(Icons.arrow_forward_ios)),
+          IconButton(onPressed: pushSaved, icon: const Icon(Icons.arrow_forward_ios)),
         ],
       ),
       body: Builder(

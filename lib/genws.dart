@@ -2,14 +2,14 @@ import 'package:word_search_safety/word_search_safety.dart';
 
 void main() {
   final List<String> words = ["horses", "compsci", "python"];
-  final int i = 10;
+  const int i = 10;
 
-  generate_wordsearch(words, i);
+  generateWordsearch(words, i);
 
 }
 
 
-List<String> generate_wordsearch(List<String> words, int gridSize){
+List<String> generateWordsearch(List<String> words, int gridSize){
   final WSSettings ws = WSSettings(
       width: gridSize,
       height: gridSize,

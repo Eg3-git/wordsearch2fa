@@ -38,11 +38,11 @@ class PwordState extends State<PwordPage> with SingleTickerProviderStateMixin {
           controller: field1,
           obscureText: isVisible,
           decoration: InputDecoration(
-            border: UnderlineInputBorder(),
+            border: const UnderlineInputBorder(),
             hintText: "Set a Keyword",
             labelText: "Keyword",
             helperText: "Please enter a keyword",
-            helperStyle: TextStyle(color: Colors.green),
+            helperStyle: const TextStyle(color: Colors.green),
             suffixIcon: IconButton(
               icon: Icon(isVisible
                 ? Icons.visibility
@@ -64,11 +64,11 @@ class PwordState extends State<PwordPage> with SingleTickerProviderStateMixin {
           controller: field2,
           obscureText: isVisible,
           decoration: InputDecoration(
-              border: UnderlineInputBorder(),
+              border: const UnderlineInputBorder(),
               hintText: "Confirm Password",
               labelText: "Confirm",
               helperText: "Please confirm your keyword",
-              helperStyle: TextStyle(color: Colors.green),
+              helperStyle: const TextStyle(color: Colors.green),
               suffixIcon: IconButton(
                 icon: Icon(isVisible
                     ? Icons.visibility
