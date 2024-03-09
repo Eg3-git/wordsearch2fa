@@ -75,15 +75,19 @@ class PinTestState extends State<PinTestPage> with SingleTickerProviderStateMixi
   }
 
   Widget grid(var ui) {
+    double maxSize = min(ui.size.width, ui.size.height);
 
     return Container(
         alignment: Alignment.center,
-        constraints: BoxConstraints(maxWidth: min(ui.size.width, ui.size.height), maxHeight: min(ui.size.width, ui.size.height)),
+        width: maxSize * 0.9,
+        height: maxSize * 0.9,
+        //constraints: BoxConstraints(maxWidth: min(ui.size.width, ui.size.height), maxHeight: min(ui.size.width, ui.size.height)),
 
         child: Column(
           children: [
-            Text(_digits.join().replaceAll(RegExp(r"."), "⬮")),
+            Text(_digits.join().replaceAll(RegExp(r"."), "⬮"),  style: const TextStyle(fontSize: 54),),
 
+            const Spacer(),
             Row(
               children: <Widget>[
                 TextButton(onPressed: () {addDigit(1);}, child: const Text("1")),
@@ -119,7 +123,7 @@ class PinTestState extends State<PinTestPage> with SingleTickerProviderStateMixi
     return Column(
       children: <Widget>[
         grid(ui),
-        SizedBox(height: ui.size.height / 44,),
+        //SizedBox(height: ui.size.height / 44,),
         Divider(
           indent: ui.size.width / 12,
           endIndent: ui.size.width / 12,

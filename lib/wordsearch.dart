@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wordsearch2fa/main.dart';
 import 'dart:math';
 
 import 'genws.dart';
@@ -62,7 +63,9 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
                   "Codeword entered correctly")
                   : const Text("Incorrect"),
             actions: <Widget>[
-              TextButton(onPressed: () {Navigator.of(context).pop();}, child: const Text("close")),
+              isfound
+              ? TextButton(onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const MyApp()));}, child: const Text("Home"))
+              : TextButton(onPressed: () {Navigator.of(context).pop();}, child: const Text("close")),
             ],
 
 
@@ -84,6 +87,7 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
       alignment: Alignment.center,
       constraints: BoxConstraints(maxWidth: min(ui.size.width, ui.size.height), maxHeight: min(ui.size.width, ui.size.height)),
       child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
         onPanUpdate: (details) {
           changeLetterColor(details.localPosition.dx, details.localPosition.dy, ui);
           _dragX.add(details.localPosition.dx);
@@ -95,6 +99,7 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
           clearSwipe();
         },
         child: GridView.count(
+          physics: const NeverScrollableScrollPhysics(),
           primary: false,
             shrinkWrap: true,
             crossAxisCount: gridSize,
@@ -116,7 +121,7 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
   }
 
   void locateWord(var t) {
-    int puzzleSize = min(t.size.width, t.size.height);
+    double puzzleSize = min(t.size.width, t.size.height);
 
     double x0 = _dragX.first;
     double x1 = _dragX.last;
@@ -160,7 +165,7 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
   }
 
   void changeLetterColor(double x, double y, var t) {
-    int puzzleSize = min(t.size.width, t.size.height);
+    double puzzleSize = min(t.size.width, t.size.height);
 
     int myx = x ~/ (puzzleSize / gridSize);
     int myy = y ~/ (puzzleSize / gridSize);
@@ -195,8 +200,8 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
           thickness: 3.0,
           color: Colors.black,
         ),
-        SizedBox(height: ui.size.height / 44,),
-        box(),
+        //SizedBox(height: ui.size.height / 44,),
+        //box(),
       ],
     );
   }
