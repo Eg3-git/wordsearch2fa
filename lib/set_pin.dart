@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wordsearch2fa/pin.dart';
 import 'dart:math';
 
+import 'package:wordsearch2fa/set_pword.dart';
+
 
 class PinEntryPage extends StatefulWidget {
 
@@ -28,7 +30,19 @@ class PinEntryState extends State<PinEntryPage> with SingleTickerProviderStateMi
   }
 
   void next() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => PinTestPage(title: "Wordsearch", pin: _digits.join(), withMFA:widget.withMFA)));
+    print("bonjour");
+    if (widget.withMFA) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) =>
+          PwordPage(title: "Choose keyword",
+              pin: _digits.join(),
+              withMFA: widget.withMFA)));
+    } else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) =>
+          PinTestPage(title: "Enter pin",
+            pin: _digits.join(),
+            withMFA: widget.withMFA,
+            pword: '',)));
+    }
   }
 
   void showMessage(String input, bool isfound) {

@@ -13,6 +13,7 @@ class WordsearchPage extends StatefulWidget {
   final String title;
   final String pword;
 
+
   @override
   WordsearchState createState() => WordsearchState();
 
@@ -23,12 +24,13 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
   final List<String> _savedwords = <String>[];
   final List<String> _letters = <String>[];
   final List<bool> _userletters = <bool>[];
-  final List<String> _words = ["horses", "python", "compsci"];
+  final List<String> _words = ["horses", "python", "compsci", "smile", "dog", "wolves", "computer", "bottle", "cheddar", "cream", "mouse", "music"];
   final List<double> _dragX = <double>[];
   final List<double> _dragY = <double>[];
   //final List<int> _positions = <int>[];
   final TextStyle _biggerFont = const TextStyle(fontSize: 24);
   final TextStyle _bigFont = const TextStyle(fontSize: 18);
+  final DateTime start = DateTime.now();
 
   void setupgrid(List<String> words) {
     _words.add(widget.pword);
@@ -44,7 +46,9 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
       p = p + _saved[i];
     }
 
+    print("entered: $p actual: ${widget.pword}");
     if (widget.pword == p) {
+      print(DateTime.now().difference(start));
       foundCorrect = true;
     }
 
@@ -57,7 +61,7 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Your answer: $input"),
+            title: const Text("Your result"),
               content: isfound
                   ? const Text(
                   "Codeword entered correctly")
@@ -107,7 +111,7 @@ class WordsearchState extends State<WordsearchPage> with SingleTickerProviderSta
           return Container(
             constraints: BoxConstraints(maxWidth: min(ui.size.width, ui.size.height), maxHeight: min(ui.size.width, ui.size.height)),
             decoration: BoxDecoration(
-              color: _userletters[index] ? Colors.yellow.shade200 : null,
+              color: _userletters[index] ? Colors.white : null,
             ),
             alignment: Alignment.center,
     child: ListTile(

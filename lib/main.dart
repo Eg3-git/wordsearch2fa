@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'WordSearch2FA Home Page',
       theme: ThemeData(
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -52,14 +52,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               child: const Text('Baseline Test'),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PinEntryPage(title: 'Word Search', withMFA: false)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PinEntryPage(title: 'Choose a pin', withMFA: false)));
               },
             ),
 
             ElevatedButton(
               child: const Text('MFA Test'),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PinEntryPage(title: 'Word Search', withMFA: true)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PinEntryPage(title: 'Choose a pin', withMFA: true)));
               },
             ),
 

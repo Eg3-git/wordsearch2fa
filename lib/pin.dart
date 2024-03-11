@@ -3,11 +3,14 @@ import 'package:wordsearch2fa/main.dart';
 import 'package:wordsearch2fa/set_pword.dart';
 import 'dart:math';
 
+import 'package:wordsearch2fa/wordsearch.dart';
+
 
 class PinTestPage extends StatefulWidget {
 
-  const PinTestPage({super.key, required this.title, required this.pin, required this.withMFA});
+  const PinTestPage({super.key, required this.title, required this.pword, required this.pin, required this.withMFA});
   final String title;
+  final String pword;
   final String pin;
   final bool withMFA;
 
@@ -19,6 +22,7 @@ class PinTestPage extends StatefulWidget {
 class PinTestState extends State<PinTestPage> with SingleTickerProviderStateMixin {
   final List<String> _digits = <String>[];
   String pin = "";
+  final DateTime start = DateTime.now();
 
 
   void addDigit(int digit) {
@@ -30,7 +34,9 @@ class PinTestState extends State<PinTestPage> with SingleTickerProviderStateMixi
   }
 
   void checkIsRight() {
-    showMessage(_digits.join() == widget.pin);
+    String entered = _digits.join();
+    print("entered: $entered actual: ${widget.pin}");
+    showMessage(entered == widget.pin);
     clear();
 
   }
@@ -41,7 +47,7 @@ class PinTestState extends State<PinTestPage> with SingleTickerProviderStateMixi
       builder: (BuildContext context) {
         return AlertDialog(
           title: isCorrect
-          ? const Text("Pin entered correctly")
+          ? small()
           : const Text("Pin incorrect"),
           content: isCorrect
               ? const Text(
@@ -54,11 +60,18 @@ class PinTestState extends State<PinTestPage> with SingleTickerProviderStateMixi
       },
     );
   }
+
+  Widget small() {
+    //print(start);
+    print(DateTime.now().difference(start));
+    return const Text("Pin entered correctly");
+  }
+
   
   Widget messageHandler(isCorrect){
     if (isCorrect){
       if (widget.withMFA){
-        return TextButton(onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const PwordPage(title: "Wordsearch")));}, child: const Text("Go to MFA"),);
+        return TextButton(onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => WordsearchPage(title: "Wordsearch", pword: widget.pword,)));}, child: const Text("Go to MFA"),);
       } else {
         return TextButton(onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const MyApp()));}, child: const Text("Home"),);
       }

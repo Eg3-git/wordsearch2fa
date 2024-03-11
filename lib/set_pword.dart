@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:wordsearch2fa/pin.dart';
 import 'package:wordsearch2fa/wordsearch.dart';
 
 class PwordPage extends StatefulWidget {
-  const PwordPage({super.key, required this.title});
+  const PwordPage({super.key, required this.title, required this.pin, required this.withMFA});
   final String title;
+  final String pin;
+  final bool withMFA;
 
   @override
   PwordState createState() => PwordState();
@@ -27,7 +30,7 @@ class PwordState extends State<PwordPage> with SingleTickerProviderStateMixin {
       setState(() {
         pword = field1.text;
       });
-      Navigator.push(context, MaterialPageRoute(builder: (context) => WordsearchPage(title: "Wordsearch", pword: pword,)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => PinTestPage(title: "Enter pin", pword: pword, pin: widget.pin, withMFA: widget.withMFA,)));
     }
   }
 
